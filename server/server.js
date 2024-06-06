@@ -15,3 +15,5 @@ app.use('/api', artigoRoute);
 app.listen(8000, () =>
     console.log(`Server is live 8000`),
 );
+
+export {app};

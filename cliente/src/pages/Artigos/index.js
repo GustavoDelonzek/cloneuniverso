@@ -49,6 +49,7 @@ function Artigos() {
         api.get("/")
             .then((r) => setArtigosGet(r.data))
             .catch((error) => console.log(error));
+        buscarDados()
         //Astronautas
         api.get("/astros")
         .then((r) => setPessoas(r.data))
@@ -79,6 +80,29 @@ function Artigos() {
             }).then(() => window.location.reload())
         }
 
+    }
+
+    const buscarDados = () => {
+        const apodApi = `https://api.nasa.gov/planetary/apod?api_key=6hbSF0dO6LHta3b0ghWtGepdEU9v7CriQwOvQQ52&date=${dataAtual()}`;
+
+        fetch(apodApi)
+            .then((r) => r.json())
+            .then((data) => {
+                setApodData(data);
+            })
+            .catch((error) => {
+                console.error('Erro ao buscar dados:', error);
+            });
+    };
+
+    function dataAtual() {
+        const data = new Date(Date.now() + (new Date().getTimezoneOffset() - 300) * 60000);
+
+        const ano = data.getFullYear();
+        const mes = String(data.getMonth() + 1).padStart(2, '0');
+        const dia = String(data.getDate()).padStart(2, '0');
+
+        return `${ano}-${mes}-${dia}`;
     }
 
 
@@ -213,10 +237,10 @@ function Artigos() {
                                                     <div className="row">
 
                                                         <button className="btn col-6 text-start text-light">
-                                                            <IoMdHeartEmpty size={25} /> {artigos.curtidas.length}
+                                                            <IoMdHeartEmpty size={25} /> {artigos.curtidas}
                                                         </button>
 
-                                                        <p class="card-text text-end col-6"><small class="text-body-light">{artigos.horario.toLocaleString()}</small></p>
+                                                        <p class="card-text text-end col-6"><small class="text-body-light">{new Date(artigos.horario).toLocaleString()}</small></p>
                                                     </div>
 
                                                 </div>
