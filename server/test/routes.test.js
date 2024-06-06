@@ -32,7 +32,16 @@ describe('Product Routes', () => {
     });
 
  
-    
+    it('should delete a product on /:id DELETE', (done) => {
+        const id = "JtB3ga7WEhFLlhNfHiZt";
+        chai.request(app)
+            .delete(`/api/${id}`)
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                done();
+            });
+    });
+
     it('should get all news on /noticias GET', (done) => {
         chai.request(app)
             .get('/api/noticias')
